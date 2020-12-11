@@ -17,6 +17,8 @@ motion_sensor_feed = aio.feeds("bike-light-detector.motion-sensor")
 # GPIO Setup
 GPIO.setmode(GPIO.BCM) # Use BCM board layout. Hint: use https://pinout.xyz
 GPIO.setup(light_sensor_pin, GPIO.IN) # Configure Light Sensor Pin to what is needed.
+GPIO.setup(motion_sensor_pin, GPIO.IN) # Configure Motion Sensor Pin to what is needed.
+
 
 async def sendSensorData(pin, feed):
     if GPIO.input(pin):
