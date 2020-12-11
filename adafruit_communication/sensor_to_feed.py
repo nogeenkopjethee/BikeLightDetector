@@ -1,4 +1,4 @@
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from Adafruit_IO import Client, Feed, Data
 import private_settings
 import settings
@@ -29,3 +29,5 @@ async def main():
         await sendSensorData(light_sensor_pin, light_sensor_feed)
         await sendSensorData(motion_sensor_pin, motion_sensor_feed)
         await asyncio.sleep(1)
+
+asyncio.run(main())
