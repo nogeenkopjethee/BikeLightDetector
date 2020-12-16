@@ -1,0 +1,16 @@
+[Unit]
+Description=Service to write sensor data to Adafruit.io
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/BikeLightDetector/app
+ExecStartPre=/bin/sleep 20
+ExecStart=/usr/bin/python3 -u sensor_to_feed.py
+#StandardOutput=syslog
+#StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

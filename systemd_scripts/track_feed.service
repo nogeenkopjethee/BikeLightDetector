@@ -1,0 +1,16 @@
+[Unit]
+Description=Service to track Adafruit IO feeds and warn based on data received.
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/BikeLightDetector/app
+ExecStartPre=/bin/sleep 20
+ExecStart=/usr/bin/python3 -u track_feed.py
+#StandardOutput=syslog
+#StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
