@@ -18,6 +18,7 @@ GPIO.setup(settings.RED_LIGHT_PIN, GPIO.OUT)
 light_sensor_feed = aio.feeds("bike-light-detector.light-sensor")
 motion_sensor_feed = aio.feeds("bike-light-detector.motion-sensor")
 warning_feed = aio.feeds("bike-light-detector.warning-feed")
+sensor_state_feed = aio.feeds("bike-light-detector.sensor-states")
 
 
 # Using a while-loop, this function reads the status of the motion sensor every second.
@@ -37,17 +38,20 @@ def readFeed():
             if light_sensor_value == 0:
                 print("WARNING: Bike without light")
                 print ("This warning will be shown for 20 seconds!")
+                aio.send_data(sensor_state_feed.key, 2)
                 aio.send_data(warning_feed.key, "WAARSCHUWING: Fiets zonder licht!")
                 GPIO.output(settings.GREEN_LIGHT_PIN, GPIO.LOW)
                 GPIO.output(settings.RED_LIGHT_PIN, GPIO.HIGH)
                 time.sleep(20)
                 aio.send_data(warning_feed.key, "Mogelijk druk kruispunt.")
             elif light_sensor_value == 1:
+                aio.send_data(sensor_state_feed.key, 3)
                 print("Bike with a light")
                 GPIO.output(settings.RED_LIGHT_PIN, GPIO.LOW)
                 GPIO.output(settings.GREEN_LIGHT_PIN, GPIO.HIGH)
         else:
             print("No bike detected")
+            aio.send_data(sensor_state_feed.key, 1)
             GPIO.output(settings.GREEN_LIGHT_PIN, GPIO.LOW)
             GPIO.output(settings.RED_LIGHT_PIN, GPIO.LOW)
             time.sleep(2)
