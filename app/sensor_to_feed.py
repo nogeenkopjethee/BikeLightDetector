@@ -29,7 +29,6 @@ async def sendSensorData(pin, feed):
 async def main():
     while True:
         await sendSensorData(motion_sensor_pin, motion_sensor_feed)
-        await asyncio.sleep(1)
         await sendSensorData(light_sensor_pin, light_sensor_feed)
         await asyncio.sleep(1)
 
